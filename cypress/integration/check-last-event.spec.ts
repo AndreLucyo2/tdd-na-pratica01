@@ -34,6 +34,7 @@ interface I_LoadLastEventRepository {
 
 //REPOSITORY ----------------------------------------------------------
 //cara que recebe dados de fora, classe que busca dados, para o teste nao importa de onde vem os dados
+// pode alterar esta implanentação... LSP
 class LoadLastEventRepositoryMock implements I_LoadLastEventRepository {
     groupId?: string;
 
