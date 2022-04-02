@@ -13,9 +13,9 @@ class CheckLastEventStatus {
     //Sintaxe typescript  loadLastEventRepository
     constructor(private readonly loadLastEventRepository: I_LoadLastEventRepository) { }
 
-    //Caso de uso:
-    async perform(groupId: string): Promise<string> {
-        const event = await this.loadLastEventRepository.loadLastEvent(groupId)
+    //Caso de uso: Ajustado para receber um objeto
+    async perform({ groupId }: { groupId: string }): Promise<string> {
+        const event = await this.loadLastEventRepository.loadLastEvent({ groupId })
         return event == undefined ? 'done' : 'active'
     }
 }
@@ -23,11 +23,17 @@ class CheckLastEventStatus {
 
 
 
+
+
+
 //INTERFACE ----------------------------------------------------------
 //Definir um contrato entre as classes
 interface I_LoadLastEventRepository {
-    loadLastEvent: (groupId: string) => Promise<{ endDate: Date } | undefined> //Retorna indefinido ou uma data
+    loadLastEvent: (input: { groupId: string }) => Promise<{ endDate: Date } | undefined> //Retorna indefinido ou uma data
 }
+
+
+
 
 
 
@@ -46,13 +52,16 @@ class LoadLastEventRepositorySpy implements I_LoadLastEventRepository {
     //saida
     output?: { endDate: Date }
 
-    async loadLastEvent(groupId: string): Promise<{ endDate: Date } | undefined> {
+    async loadLastEvent({ groupId }: { groupId: string }): Promise<{ endDate: Date } | undefined> {
         this.groupId = groupId;
         this.callsCount++ //Encrementa a cada chamada
         //sempre retorne output
         return this.output
     }
 }
+
+
+
 
 
 
@@ -91,8 +100,14 @@ const makeSut = (): SutOutput => {
 
 
 
+
+
+
 //TESTE --------------------------------------------
 describe('CheckLastEventStatus', () => {
+
+    const groupId = 'any_grou_id'
+
     //Obtem o evendo pelo ID
     it('Should get last evet data', async () => {
 
@@ -100,10 +115,10 @@ describe('CheckLastEventStatus', () => {
         const { sut, loadLastEventRepository } = makeSut()
 
         //Action : Caso de uso
-        await sut.perform('any_grou_id')
+        await sut.perform({ groupId })
 
         //Assert : Teste
-        expect(loadLastEventRepository.groupId).to.equal('any_grou_id')
+        expect(loadLastEventRepository.groupId).to.equal(groupId)
 
         //teste para não deixar fazer mais de uma chamada
         expect(loadLastEventRepository.callsCount).to.equal(1)
@@ -118,7 +133,7 @@ describe('CheckLastEventStatus', () => {
         loadLastEventRepository.output = undefined
 
         //Action : Caso de uso
-        const status = await sut.perform('any_grou_id')
+        const status = await sut.perform({ groupId })
 
         //Assert : Teste
         expect(status).to.equal('done')
@@ -138,7 +153,7 @@ describe('CheckLastEventStatus', () => {
         }
 
         //Action : Caso de uso
-        const status = await sut.perform('any_grou_id')
+        const status = await sut.perform({ groupId })
 
         //Assert : Teste
         expect(status).to.equal('active')
