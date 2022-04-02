@@ -10,15 +10,10 @@
 //APP -----------------------------------------------------------------
 class CheckLastEventStatus {
 
-    //Injeção de dependencies
-    loadLastEventRepository: LoadLastEventRepository
-
-    constructor(loadLastEventRepository: LoadLastEventRepository) {
-        this.loadLastEventRepository = loadLastEventRepository;
-    }
+    //Sintaxe typescript  loadLastEventRepository
+    constructor(private readonly loadLastEventRepository: LoadLastEventRepository) { }
 
     async perform(groupId: string): Promise<void> {
-
     }
 
 }
@@ -26,9 +21,7 @@ class CheckLastEventStatus {
 //REPOSITORY ----------------------------------------------------------
 //cara que recebe dados de fora
 class LoadLastEventRepository {
-
     groupId?: string;
-
 }
 
 
@@ -38,7 +31,6 @@ describe('CheckLastEventStatus', () => {
         //Arrange:
         const loadLastEventRepository = new LoadLastEventRepository()
         const checkLastEventStatus = new CheckLastEventStatus(loadLastEventRepository)
-
 
         //Action
         await checkLastEventStatus.perform('any_grou_id')
