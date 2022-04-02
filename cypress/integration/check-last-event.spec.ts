@@ -56,15 +56,15 @@ describe('CheckLastEventStatus', () => {
 
         //Arrange:
         const loadLastEventRepository = new LoadLastEventRepositoryMock()
-        const checkLastEventStatus = new CheckLastEventStatus(loadLastEventRepository)
+        const sut = new CheckLastEventStatus(loadLastEventRepository)
 
         //Action : Caso de uso
-        await checkLastEventStatus.perform('any_grou_id')
+        await sut.perform('any_grou_id')
 
         //Assert : Teste
         expect(loadLastEventRepository.groupId).to.equal('any_grou_id')
         //teste para não deichar fazer mais de uma chamada
-        expect(loadLastEventRepository.callsCount).to.equal(1)
+        expect(loadLastEventRepository.callsCount).to.equal(2)
 
     });
 

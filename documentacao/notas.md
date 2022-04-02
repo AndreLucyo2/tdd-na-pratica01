@@ -21,3 +21,4 @@
 - Repository pattern
 - Test Double(Mock) - dubles de testes
 - Small commits - sempre fazer commits pequenos
+- System Under Test (SUT) - nomeio o metodo que esta testando
