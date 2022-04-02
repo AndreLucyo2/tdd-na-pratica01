@@ -15,8 +15,8 @@ class CheckLastEventStatus {
 
     //Caso de uso:
     async perform(groupId: string): Promise<string> {
-        await this.loadLastEventRepository.loadLastEvent(groupId)
-        return 'done' //primeiro teste de status
+        const event = await this.loadLastEventRepository.loadLastEvent(groupId)
+        return event == undefined ? 'done' : 'active'
     }
 }
 
@@ -26,7 +26,7 @@ class CheckLastEventStatus {
 //INTERFACE ----------------------------------------------------------
 //Definir um contrato entre as classes
 interface I_LoadLastEventRepository {
-    loadLastEvent: (groupId: string) => Promise<void>
+    loadLastEvent: (groupId: string) => Promise<{ endDate: Date } | undefined> //Retorna indefinido ou uma data
 }
 
 
@@ -44,9 +44,9 @@ class LoadLastEventRepositorySpy implements I_LoadLastEventRepository {
     groupId?: string;
     callsCount = 0 //conta o nmero de chamadas
     //saida
-    output: undefined
+    output?: { endDate: Date }
 
-    async loadLastEvent(groupId: string): Promise<void> {
+    async loadLastEvent(groupId: string): Promise<{ endDate: Date } | undefined> {
         this.groupId = groupId;
         this.callsCount++ //Encrementa a cada chamada
         //sempre retorne output
@@ -122,6 +122,26 @@ describe('CheckLastEventStatus', () => {
 
         //Assert : Teste
         expect(status).to.equal('done')
+
+    });
+
+
+    //Quando o agora esta antes do final do evento
+    //Data de fim do evento esta na frente do agora
+    it('Should return status active when now is before event en time', async () => {
+
+        //Arrange: com factory : recebe o objeto com os objetos
+        const { sut, loadLastEventRepository } = makeSut()
+
+        loadLastEventRepository.output = {
+            endDate: new Date(new Date().getTime() + 1)//adiciona um mileseg a data atual
+        }
+
+        //Action : Caso de uso
+        const status = await sut.perform('any_grou_id')
+
+        //Assert : Teste
+        expect(status).to.equal('active')
 
     });
 
