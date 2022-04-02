@@ -1,5 +1,7 @@
 # CehcklastEventStatus UseCase
 
+(video)][https://youtu.be/sg1zFpNM5Jw?t=865]
+
 ## Dados
 *Id de Grupo
 
