@@ -13,10 +13,21 @@ class CheckLastEventStatus {
     //Sintaxe typescript  loadLastEventRepository
     constructor(private readonly loadLastEventRepository: LoadLastEventRepository) { }
 
+    //Caso de uso:
     async perform(groupId: string): Promise<void> {
+
+        this.loadLastEventRepository.groupId = groupId;
+
     }
 
 }
+
+//INTERFACE ----------------------------------------------------------
+//Definir um contrato entre as classes
+interface LoadLastEventRepository {
+    loadLastEvent: (groupId: string) => Promise<void>
+}
+
 
 //REPOSITORY ----------------------------------------------------------
 //cara que recebe dados de fora
