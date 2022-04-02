@@ -7,7 +7,7 @@
 //----------------------------------------------------------------
 // A classe diz a intenção , o que eu quero fazer 
 // O Metodo  tem o objetivo 
-//APP -----------------------------------------------------------------
+//APP -- CASO DE USO  -----------------------------------------------------------------
 class CheckLastEventStatus {
 
     //Sintaxe typescript  loadLastEventRepository
