@@ -57,14 +57,47 @@ class LoadLastEventRepositorySpy implements I_LoadLastEventRepository {
 
 
 
+
+
+
+
+//FACTORY----------------------------------------------
+//Instancia as classes dependentes
+// o factory tambem deve retornar as dependencias
+//Retorna uma objeto com os objetos dependencias
+type SutOutput = {
+    sut: CheckLastEventStatus
+    loadLastEventRepository: LoadLastEventRepositorySpy
+}
+//Fabrica os objetos que preciso para o teste
+const makeSut = (): SutOutput => {
+    const loadLastEventRepository = new LoadLastEventRepositorySpy()
+    const sut = new CheckLastEventStatus(loadLastEventRepository)
+
+    //Retorna uma objeto com os objetos dependencias
+    return {
+        sut,
+        loadLastEventRepository
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 //TESTE --------------------------------------------
 describe('CheckLastEventStatus', () => {
     //Obtem o evendo pelo ID
     it('Should get last evet data', async () => {
 
-        //Arrange:
-        const loadLastEventRepository = new LoadLastEventRepositorySpy()
-        const sut = new CheckLastEventStatus(loadLastEventRepository)
+        //Arrange: com factory : recebe o objeto com os objetos
+        const { sut, loadLastEventRepository } = makeSut()
 
         //Action : Caso de uso
         await sut.perform('any_grou_id')
@@ -80,11 +113,9 @@ describe('CheckLastEventStatus', () => {
     //Se o grupo nao tem evento retorna o Status é finalizado
     it('Should return status done when group has no event', async () => {
 
-        //Arrange:
-        const loadLastEventRepository = new LoadLastEventRepositorySpy()
-        loadLastEventRepository.output = undefined //
-
-        const sut = new CheckLastEventStatus(loadLastEventRepository)
+        //Arrange: com factory : recebe o objeto com os objetos
+        const { sut, loadLastEventRepository } = makeSut()
+        loadLastEventRepository.output = undefined
 
         //Action : Caso de uso
         const status = await sut.perform('any_grou_id')

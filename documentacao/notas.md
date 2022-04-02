@@ -5,6 +5,9 @@
 - Blank lines (Evitar linhas em branco)
 - Improper Instantiation - Instanciamento errado de classe
 - High Coupling  - alto clopamento
+- Teste Code in production
+- Duplicate Code
+- Shotgun Surgery - ao alterar fica vermelho em varios lugares - Factory resolve, cria instancia de objetos complexos
 
 
 
