@@ -10,6 +10,13 @@
 //APP -----------------------------------------------------------------
 class CheckLastEventStatus {
 
+    //Injeção de dependencies
+    loadLastEventRepository: LoadLastEventRepository
+
+    constructor(loadLastEventRepository: LoadLastEventRepository) {
+        this.loadLastEventRepository = loadLastEventRepository;
+    }
+
     async perform(groupId: string): Promise<void> {
 
     }
@@ -29,8 +36,9 @@ class LoadLastEventRepository {
 describe('CheckLastEventStatus', () => {
     it('Should get last evet data', async () => {
         //Arrange:
-        const checkLastEventStatus = new CheckLastEventStatus()
         const loadLastEventRepository = new LoadLastEventRepository()
+        const checkLastEventStatus = new CheckLastEventStatus(loadLastEventRepository)
+
 
         //Action
         await checkLastEventStatus.perform('any_grou_id')
