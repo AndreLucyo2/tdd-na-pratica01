@@ -9,6 +9,10 @@
 // Ometo tem o objetivo 
 class CheckLastEventStatus {
 
+    async perform(groupId: string): Promise<void> {
+
+
+    }
 
 }
 
