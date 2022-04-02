@@ -63,7 +63,7 @@ describe('CheckLastEventStatus', () => {
 
         //Assert : Teste
         expect(loadLastEventRepository.groupId).to.equal('any_grou_id')
-        //teste para não deichar fazer mais de uma chamada
+        //teste para não deixar fazer mais de uma chamada
         expect(loadLastEventRepository.callsCount).to.equal(2)
 
     });
