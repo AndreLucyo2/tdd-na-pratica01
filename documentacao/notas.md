@@ -11,9 +11,13 @@
 # Design Patterns/Principles/Conventions (O que é legal fazer)
 - You Ain't Gonna Need It (YAGNI). Não faço coisas em quando voce nao precisar
 - Single Responsability(SRP)
+- Liscov Substitution (LSP)
+- Dependency Inversion(DIP)
 - Arrange,Act, Assert (AAA) 
    A - cria um bloco para organizar o teste 
    A - Cria uma ação 
    A - Cria uma espectativa para o teste
 - Dependency Injection(DI) - tirar a responsabilidade de classe criar a sua instancia
-- 
+- Repository pattern
+- Test Double(Mock) - dubles de testes
+- Small commits - sempre fazer commits pequenos

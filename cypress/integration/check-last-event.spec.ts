@@ -15,7 +15,8 @@ class CheckLastEventStatus {
 
     //Caso de uso:
     async perform(groupId: string): Promise<void> {
-        await this.loadLastEventRepository.loadLastEvent(groupId);
+        await this.loadLastEventRepository.loadLastEvent(groupId)
+        await this.loadLastEventRepository.loadLastEvent(groupId)
     }
 }
 
@@ -37,9 +38,12 @@ interface I_LoadLastEventRepository {
 // pode alterar esta implanentação... LSP
 class LoadLastEventRepositoryMock implements I_LoadLastEventRepository {
     groupId?: string;
+    callsCount = 0 //conta o nmero de chamadas
 
     async loadLastEvent(groupId: string): Promise<void> {
         this.groupId = groupId;
+        this.callsCount++ //Encrementa a cada chamada
+
     }
 }
 
@@ -59,6 +63,8 @@ describe('CheckLastEventStatus', () => {
 
         //Assert : Teste
         expect(loadLastEventRepository.groupId).to.equal('any_grou_id')
+        //teste para não deichar fazer mais de uma chamada
+        expect(loadLastEventRepository.callsCount).to.equal(1)
 
     });
 
