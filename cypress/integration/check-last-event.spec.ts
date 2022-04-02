@@ -17,6 +17,7 @@ class CheckLastEventStatus {
 }
 
 //REPOSITORY ----------------------------------------------------------
+//cara que recebe dados de fora
 class LoadLastEventRepository {
 
     groupId?: string;
