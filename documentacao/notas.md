@@ -8,6 +8,7 @@
 - Teste Code in production
 - Duplicate Code
 - Shotgun Surgery - ao alterar fica vermelho em varios lugares - Factory resolve, cria instancia de objetos complexos
+- Long Patameter List - Evitar metodos com muitos parametros
 
 
 
