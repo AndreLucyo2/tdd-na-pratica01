@@ -3,7 +3,7 @@
 (video)][https://youtu.be/sg1zFpNM5Jw?t=865]
 
 ## Dados
-*Id de Grupo
+*Id de Grupo --- OK feito teste do ID
 
 ## Fluxo primario
 1. Obter os dados do ultimo evento do grupo (data de termino e duração do mercado de notas)
