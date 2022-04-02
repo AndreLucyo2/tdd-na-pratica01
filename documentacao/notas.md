@@ -9,6 +9,7 @@
 - Duplicate Code
 - Shotgun Surgery - ao alterar fica vermelho em varios lugares - Factory resolve, cria instancia de objetos complexos
 - Long Patameter List - Evitar metodos com muitos parametros
+- Primitive Obsession - Eveitar usar tipo primitivo como parametro, ideal é criar um objeto e nomear a propriedade
 
 
 

@@ -8,20 +8,23 @@
 // A classe diz a intenção , o que eu quero fazer 
 // O Metodo  tem o objetivo 
 //APP -- CASO DE USO  -----------------------------------------------------------------
+
+type EventStatus = { status: string } //Criando um objeto
+
 class CheckLastEventStatus {
 
     //Sintaxe typescript  loadLastEventRepository
     constructor(private readonly loadLastEventRepository: I_LoadLastEventRepository) { }
 
     //Caso de uso: Ajustado para receber um objeto
-    async perform({ groupId }: { groupId: string }): Promise<string> {
+    async perform({ groupId }: { groupId: string }): Promise<EventStatus> {
 
         const event = await this.loadLastEventRepository.loadLastEvent({ groupId })
 
-        if (event == undefined) return 'done'
+        if (event == undefined) return { status: 'done' }
 
         const now = new Date()
-        return event.endDate > now ? 'active' : 'inReview'
+        return event.endDate > now ? { status: 'active' } : { status: 'inReview' }
     }
 }
 
@@ -138,10 +141,10 @@ describe('CheckLastEventStatus', () => {
         loadLastEventRepository.output = undefined
 
         //Action : Caso de uso
-        const status = await sut.perform({ groupId })
+        const eventStatus = await sut.perform({ groupId })
 
         //Assert : Teste
-        expect(status).to.equal('done')
+        expect(eventStatus.status).to.equal('done')
 
     });
 
@@ -158,13 +161,12 @@ describe('CheckLastEventStatus', () => {
         }
 
         //Action : Caso de uso
-        const status = await sut.perform({ groupId })
+        const eventStatus = await sut.perform({ groupId })
 
         //Assert : Teste
-        expect(status).to.equal('active')
+        expect(eventStatus.status).to.equal('active')
 
     });
-
 
 
     //Quando o agora esta depois do final do evento
@@ -179,10 +181,10 @@ describe('CheckLastEventStatus', () => {
         }
 
         //Action : Caso de uso
-        const status = await sut.perform({ groupId })
+        const eventStatus = await sut.perform({ groupId })
 
         //Assert : Teste
-        expect(status).to.equal('inReview')
+        expect(eventStatus.status).to.equal('inReview')
 
     });
 
