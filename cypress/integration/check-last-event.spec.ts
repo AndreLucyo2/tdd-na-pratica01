@@ -5,49 +5,59 @@
 
 
 //----------------------------------------------------------------
-//A classe diz a intenção , o que eu quero fazer 
+// A classe diz a intenção , o que eu quero fazer 
 // O Metodo  tem o objetivo 
 //APP -----------------------------------------------------------------
 class CheckLastEventStatus {
 
     //Sintaxe typescript  loadLastEventRepository
-    constructor(private readonly loadLastEventRepository: LoadLastEventRepository) { }
+    constructor(private readonly loadLastEventRepository: I_LoadLastEventRepository) { }
 
     //Caso de uso:
     async perform(groupId: string): Promise<void> {
-
-        this.loadLastEventRepository.groupId = groupId;
-
+        await this.loadLastEventRepository.loadLastEvent(groupId);
     }
-
 }
+
+
+
 
 //INTERFACE ----------------------------------------------------------
 //Definir um contrato entre as classes
-interface LoadLastEventRepository {
+interface I_LoadLastEventRepository {
     loadLastEvent: (groupId: string) => Promise<void>
 }
 
 
+
+
+
 //REPOSITORY ----------------------------------------------------------
-//cara que recebe dados de fora
-class LoadLastEventRepository {
+//cara que recebe dados de fora, classe que busca dados, para o teste nao importa de onde vem os dados
+class LoadLastEventRepositoryMock implements I_LoadLastEventRepository {
     groupId?: string;
+
+    async loadLastEvent(groupId: string): Promise<void> {
+        this.groupId = groupId;
+    }
 }
+
+
 
 
 //TESTE --------------------------------------------
 describe('CheckLastEventStatus', () => {
     it('Should get last evet data', async () => {
+
         //Arrange:
-        const loadLastEventRepository = new LoadLastEventRepository()
+        const loadLastEventRepository = new LoadLastEventRepositoryMock()
         const checkLastEventStatus = new CheckLastEventStatus(loadLastEventRepository)
 
-        //Action
+        //Action : Caso de uso
         await checkLastEventStatus.perform('any_grou_id')
 
-        //Assert
-        expect(loadLastEventRepository.groupId).to.be('any_grou_id')
+        //Assert : Teste
+        expect(loadLastEventRepository.groupId).to.equal('any_grou_id')
 
     });
 
