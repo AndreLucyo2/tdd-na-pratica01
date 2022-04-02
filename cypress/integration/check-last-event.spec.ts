@@ -15,10 +15,10 @@ class CheckLastEventStatus {
 
 //TESTE --------------------------------------------
 describe('CheckLastEventStatus', () => {
-    it('Should get last evet data', () => {
+    it('Should get last evet data', async () => {
         const checkLastEventStatus = new CheckLastEventStatus()
 
-
+        await checkLastEventStatus.perform('any_grou_id')
 
     });
 
